@@ -6,12 +6,12 @@ public class Rotator : MonoBehaviour {
 
     private float startWait;
     private float waveWait;
-
+	public GameObject pickupp;
 
     void Start()
     {
-        startWait = 1;
-        waveWait = 5;
+        startWait = 5;
+        waveWait = 8;
         StartCoroutine(weaponWaves());
         
     }
@@ -26,15 +26,18 @@ public class Rotator : MonoBehaviour {
     IEnumerator weaponWaves()
     {
         yield return new WaitForSeconds(startWait);
+
         while (true)
         {
-            transform.position = new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20));
-          //  gameObject.SetActive(true);
-            yield return new WaitForSeconds(waveWait);
-            //
+			GameObject pckup2 = pickupp;
+
+			Vector3 player_pos = GameObject.Find ("Player").transform.position;
+
+			transform.position = new Vector3(Random.Range(player_pos[0]-5, player_pos[0]+5), 0, Random.Range(player_pos[2]-5, player_pos[2]+5));
+			Instantiate (pckup2, transform.position, Quaternion.identity);
+
+			yield return new WaitForSeconds(waveWait);
         }
-
-
 
     }
 }

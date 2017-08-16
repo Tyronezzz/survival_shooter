@@ -5,7 +5,7 @@ namespace CompleteProject
 {
     public class PlayerShooting : MonoBehaviour
     {
-        public int damagePerShot = 30;                  // The damage inflicted by each bullet.
+        public int damagePerShot = 50;                  // The damage inflicted by each bullet.
         public float timeBetweenBullets = 0.15f;        // The time between each shot.
         public float range = 100f;                      // The distance the gun can fire.
         private int weaponupdate;
@@ -101,14 +101,14 @@ namespace CompleteProject
             if (weaponupdate == 1)                       // get the weapon
             {
                 gunLine.SetWidth(0.3f, 0.3f);
-                damagePerShot = 60;
+                damagePerShot = 100;
                 //Debug.Log("damage"+damagePerShot);
             }
 
             else
             {
                 gunLine.SetWidth(0.06f, 0.06f);
-                damagePerShot = 30;
+                damagePerShot = 50;
             }
                 
             gunLine.SetPosition (0, transform.position);
@@ -145,7 +145,8 @@ namespace CompleteProject
                         if (delta_z < 0)
                             theta *= -1;
                         serialController.SendSerialMessage(theta.ToString());
-                        Debug.Log("Send the angle"+theta);
+                        //Debug.Log("Send the angle"+theta);
+
                     }
 
                 }

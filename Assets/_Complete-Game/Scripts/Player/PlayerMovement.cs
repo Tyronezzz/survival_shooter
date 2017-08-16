@@ -7,6 +7,8 @@ namespace CompleteProject
     {
         public float speed = 6f;            // The speed that the player will move at.
         public static int weaponupdate;
+		private float total_angle;
+		public SerialController serialController;              // read and write
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -27,6 +29,8 @@ namespace CompleteProject
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
             weaponupdate = 0;
+			total_angle = 0;
+			serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
         }
 
 
@@ -35,12 +39,31 @@ namespace CompleteProject
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
+			if (Input.GetKeyDown(KeyCode.D)) 
+			{
+				//Debug.Log ("...");
+				transform.Rotate (new Vector3(0, 30, 0));
+				total_angle += 30;
+				serialController.SendSerialMessage(total_angle.ToString());
+			}
+
+
+			if (Input.GetKeyDown(KeyCode.A)) 
+			{
+				//Debug.Log ("left...");
+				transform.Rotate (new Vector3(0, -30, 0));
+				total_angle -= 30;
+				serialController.SendSerialMessage(total_angle.ToString());
+			}
+
+
+
 
             // Move the player around the scene.
             Move (h, v);
 
             // Turn the player to face the mouse cursor.
-            Turning ();
+         //   Turning ();
 
             // Animate the player.
             Animating (h, v);
@@ -50,7 +73,7 @@ namespace CompleteProject
         void Move (float h, float v)
         {
             // Set the movement vector based on the axis input.
-            movement.Set (h, 0f, v);
+			movement.Set (v * Mathf.Tan(total_angle/180*Mathf.PI), 0f, v);
             
             // Normalise the movement vector and make it proportional to the speed per second.
             movement = movement.normalized * speed * Time.deltaTime;
@@ -60,7 +83,7 @@ namespace CompleteProject
         }
 
 
-        void Turning ()
+        /*void Turning ()
         {
 #if !MOBILE_INPUT
             // Create a ray from the mouse cursor on screen in the direction of the camera.
@@ -103,7 +126,7 @@ namespace CompleteProject
                 playerRigidbody.MoveRotation(newRotatation);
             }
 #endif
-        }
+        }*/
 
 
         void Animating (float h, float v)
@@ -121,8 +144,16 @@ namespace CompleteProject
         {
             if (other.gameObject.CompareTag("Pick Up"))
             {
-                other.gameObject.SetActive(false);
+                
+				Destroy(other.gameObject);
                 weaponupdate = 1;
+
+				GameObject ply = GameObject.FindGameObjectWithTag ("Player");
+				ply.GetComponent <PlayerHealth> ().currentHealth += 20;	
+
+
+				if (ply.GetComponent <PlayerHealth> ().currentHealth > 100)
+					ply.GetComponent <PlayerHealth> ().currentHealth = 100;
                 //count += 1;
               //  SetCountText();
             }
