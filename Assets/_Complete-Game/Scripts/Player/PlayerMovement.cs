@@ -7,7 +7,7 @@ namespace CompleteProject
     {
         public float speed = 6f;            // The speed that the player will move at.
         public static int weaponupdate;
-		private float total_angle;
+		public static float total_angle;
 		public SerialController serialController;              // read and write
 
         Vector3 movement;                   // The vector to store the direction of the player's movement.
@@ -154,6 +154,8 @@ namespace CompleteProject
 
 				if (ply.GetComponent <PlayerHealth> ().currentHealth > 100)
 					ply.GetComponent <PlayerHealth> ().currentHealth = 100;
+				Debug.Log ("HP:"+ply.GetComponent <PlayerHealth> ().currentHealth);
+
                 //count += 1;
               //  SetCountText();
             }

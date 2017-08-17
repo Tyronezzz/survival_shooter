@@ -9,6 +9,9 @@ namespace CompleteProject
         public float timeBetweenBullets = 0.15f;        // The time between each shot.
         public float range = 100f;                      // The distance the gun can fire.
         private int weaponupdate;
+		private float shoottime = 0;
+		private Vector3 start_pos, end_pos;
+		private float d_dis = 0.2f;
 
         float timer;                                    // A timer to determine when to fire.
         Ray shootRay = new Ray();                       // A ray from the gun end forwards.
@@ -66,6 +69,126 @@ namespace CompleteProject
                 DisableEffects ();
             }
 
+			if (shoottime >= 0)    // continuous shooting...
+			{
+				gunLine.enabled = true;
+				shoottime -= 0.06f;
+
+				// Reset the timer.
+				timer = 0f;
+
+				// Play the gun shot audioclip.
+				gunAudio.Play ();
+
+				// Enable the lights.
+				gunLight.enabled = true;
+				faceLight.enabled = true;
+
+				// Stop the particles from playing if they were, then start the particles.
+				gunParticles.Stop ();
+				gunParticles.Play ();
+
+				// Enable the line renderer and set it's first position to be the end of the gun.
+				gunLine.enabled = true;
+				weaponupdate = PlayerMovement.weaponupdate;
+				if (weaponupdate == 1)                       // get the weapon
+				{
+					gunLine.SetWidth(0.3f, 0.3f);
+					damagePerShot = 100;
+					//Debug.Log("damage"+damagePerShot);
+				}
+
+				else
+				{
+					gunLine.SetWidth(0.06f, 0.06f);
+					damagePerShot = 50;
+
+				}
+				    
+				gunLine.SetPosition (0, start_pos);
+
+				// Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
+				shootRay.origin = transform.position;
+				shootRay.direction = transform.forward;
+				float total_angle = PlayerMovement.total_angle;
+
+				// Perform the raycast against gameobjects on the shootable layer and if it hits something...
+				if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+				{
+					// Try and find an EnemyHealth script on the gameobject hit.
+					EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
+
+					// If the EnemyHealth component exist...
+					if (enemyHealth != null)
+					{
+						// ... the enemy should take damage.
+						enemyHealth.TakeDamage(damagePerShot, shootHit.point);                   
+					}
+
+
+					else    //  correct????
+					{
+						GameObject loop = GameObject.Find("loop");
+						if (loop != null)
+						{
+							loopposition = loop.transform.position;
+							float delta_x = shootHit.point[0] - loopposition[0];
+							float delta_z = shootHit.point[2] - loopposition[2];
+							float RR = Mathf.Sqrt(delta_x * delta_x + delta_z * delta_z);
+
+							double theta = Mathf.Acos(delta_x/RR)*180/3.1416;               //calculate the angle, send it
+							if (delta_z < 0)
+								theta *= -1;
+							serialController.SendSerialMessage(theta.ToString());
+							//Debug.Log("Send the angle"+theta);
+
+						}
+
+					}
+
+
+					float k;
+					if (total_angle==0 || total_angle==360 || total_angle ==-360)
+						k = (shootHit.point [2] - transform.position [2]) / (shootHit.point [0] - transform.position [0]);
+					else
+						k = 99999; 
+					Debug.Log ("KKKK" + k);
+					// Set the second position of the line renderer to the point the raycast hit.
+//					gunLine.SetPosition (1, shootHit.point);
+					gunLine.SetPosition (1, end_pos);
+					start_pos[0] += d_dis; 
+					start_pos [2] += d_dis * k;
+					end_pos[0] += (float)1.2f*d_dis;
+					end_pos[2] += (float)1.2f*d_dis*k;
+
+				}
+				// If the raycast didn't hit anything on the shootable layer...
+				else
+				{
+					// ... set the second position of the line renderer to the fullest extent of the gun's range.
+					//gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);      
+					float k;
+					if(total_angle==0 || total_angle==360 || total_angle ==-360)
+						k = (shootRay.origin[2]+shootRay.direction[2]*range) / (shootRay.origin[0]+shootRay.direction[0]*range);
+					else
+						k = 99999;
+					// Set the second position of the line renderer to the point the raycast hit.
+					//					gunLine.SetPosition (1, shootHit.point);
+					gunLine.SetPosition (1, end_pos);
+					start_pos[0] += d_dis; 
+					start_pos [2] += d_dis * k;
+					end_pos[0] += (float)1.2f*d_dis;
+					end_pos[2] += (float)1.2f*d_dis*k;
+				
+				
+				}
+			}
+
+			else if (shoottime <= 0) {     // end of shooting
+				gunLine.enabled = false;			
+			}
+
+
             receivemsg();
         }
 
@@ -81,86 +204,11 @@ namespace CompleteProject
 
         void Shoot ()
         {
-            // Reset the timer.
-            timer = 0f;
+           
+			shoottime = 1;    
+			end_pos = transform.position;
+			start_pos = transform.position;
 
-            // Play the gun shot audioclip.
-            gunAudio.Play ();
-
-            // Enable the lights.
-            gunLight.enabled = true;
-			faceLight.enabled = true;
-
-            // Stop the particles from playing if they were, then start the particles.
-            gunParticles.Stop ();
-            gunParticles.Play ();
-
-            // Enable the line renderer and set it's first position to be the end of the gun.
-            gunLine.enabled = true;
-            weaponupdate = PlayerMovement.weaponupdate;
-            if (weaponupdate == 1)                       // get the weapon
-            {
-                gunLine.SetWidth(0.3f, 0.3f);
-                damagePerShot = 100;
-                //Debug.Log("damage"+damagePerShot);
-            }
-
-            else
-            {
-                gunLine.SetWidth(0.06f, 0.06f);
-                damagePerShot = 50;
-            }
-                
-            gunLine.SetPosition (0, transform.position);
-
-            // Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
-            shootRay.origin = transform.position;
-            shootRay.direction = transform.forward;
-
-            // Perform the raycast against gameobjects on the shootable layer and if it hits something...
-            if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
-            {
-                // Try and find an EnemyHealth script on the gameobject hit.
-                EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
-
-                // If the EnemyHealth component exist...
-                if (enemyHealth != null)
-                {
-                    // ... the enemy should take damage.
-                    enemyHealth.TakeDamage(damagePerShot, shootHit.point);                   
-                }
-
-
-                else
-                {
-                    GameObject loop = GameObject.Find("loop");
-                    if (loop != null)
-                    {
-                        loopposition = loop.transform.position;
-                        float delta_x = shootHit.point[0] - loopposition[0];
-                        float delta_z = shootHit.point[2] - loopposition[2];
-                        float RR = Mathf.Sqrt(delta_x * delta_x + delta_z * delta_z);
-
-                        double theta = Mathf.Acos(delta_x/RR)*180/3.1416;               //calculate the angle, send it
-                        if (delta_z < 0)
-                            theta *= -1;
-                        serialController.SendSerialMessage(theta.ToString());
-                        //Debug.Log("Send the angle"+theta);
-
-                    }
-
-                }
-
-                // Set the second position of the line renderer to the point the raycast hit.
-                gunLine.SetPosition (1, shootHit.point);
-                
-            }
-            // If the raycast didn't hit anything on the shootable layer...
-            else
-            {
-                // ... set the second position of the line renderer to the fullest extent of the gun's range.
-                gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);      
-            }
         }
 
 
