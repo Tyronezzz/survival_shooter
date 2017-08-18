@@ -6,6 +6,7 @@ namespace CompleteProject
     {
         public int startingHealth = 100;            // The amount of health the enemy starts the game with.
         public int currentHealth;                   // The current health the enemy has.
+		public static int eHP;
         public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
         public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
         public AudioClip deathClip;                 // The sound to play when the enemy dies.
@@ -40,7 +41,44 @@ namespace CompleteProject
                 // ... move the enemy down by the sinkSpeed per second.
                 transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
             }
+
+			int dmgFlag = Fire.dmgFlag;
+			if (dmgFlag == 1) 
+			{
+				currentHealth -= 40;
+				//Debug.Log ("Ehp"+ currentHealth);
+				GoDie (20);
+				Fire.dmgFlag = 0;
+			}
+
+
         }
+
+		public void GoDie(int amount)   // By Tyrone
+		{
+			if(isDead)
+			// ... no need to take damage so exit the function.
+			return;
+
+			// Play the hurt sound effect.
+			enemyAudio.Play ();
+
+			// Reduce the current health by the amount of damage sustained.
+			currentHealth -= amount;
+
+			// And play the particles.
+			hitParticles.Play();
+
+			// If the current health is less than or equal to zero...
+			if(currentHealth <= 0)
+			{
+				// ... the enemy is dead.
+				Death ();
+			}
+
+			Debug.Log ("EHP:"+ currentHealth);
+		}
+
 
 
         public void TakeDamage (int amount, Vector3 hitPoint)
@@ -68,6 +106,7 @@ namespace CompleteProject
                 // ... the enemy is dead.
                 Death ();
             }
+
         }
 
 

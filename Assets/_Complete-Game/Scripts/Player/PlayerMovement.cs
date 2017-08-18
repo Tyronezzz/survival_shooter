@@ -154,7 +154,7 @@ namespace CompleteProject
 
 				if (ply.GetComponent <PlayerHealth> ().currentHealth > 100)
 					ply.GetComponent <PlayerHealth> ().currentHealth = 100;
-				Debug.Log ("HP:"+ply.GetComponent <PlayerHealth> ().currentHealth);
+				//Debug.Log ("HP:"+ply.GetComponent <PlayerHealth> ().currentHealth);
 
                 //count += 1;
               //  SetCountText();

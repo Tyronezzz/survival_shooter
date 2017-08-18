@@ -4130,7 +4130,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2136582785}
   m_LocalRotation: {x: 0.004913834, y: -0, z: -0, w: 0.99998796}
-  m_LocalPosition: {x: 0.43, y: 1.05, z: 0}
+  m_LocalPosition: {x: 0.35, y: 1.05, z: 0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2023876510}
@@ -4231,6 +4231,7 @@ MonoBehaviour:
   spreadAfter: 1
   damagepp: 8
   force: 100
+  damagePerShot: 10
 --- !u!199 &2136582789
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -4344,7 +4345,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1682655003
+  randomSeed: 152582836
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4496,7 +4497,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4537,7 +4538,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4578,7 +4579,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4728,8 +4729,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 900
-    size3D: 0
+    maxNumParticles: 100
+    size3D: 1
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
