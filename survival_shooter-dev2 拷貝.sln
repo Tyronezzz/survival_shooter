@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "survival_shooter-dev2 拷貝", "Assembly-CSharp.csproj", "{08BE9DD8-DCC0-E7E2-C510-76CE91C9EEEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "survival_shooter-dev2 拷貝", "Assembly-CSharp-Editor.csproj", "{5C213C3D-FFCD-E1CC-C738-D1A10250C26D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08BE9DD8-DCC0-E7E2-C510-76CE91C9EEEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08BE9DD8-DCC0-E7E2-C510-76CE91C9EEEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08BE9DD8-DCC0-E7E2-C510-76CE91C9EEEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08BE9DD8-DCC0-E7E2-C510-76CE91C9EEEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C213C3D-FFCD-E1CC-C738-D1A10250C26D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C213C3D-FFCD-E1CC-C738-D1A10250C26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C213C3D-FFCD-E1CC-C738-D1A10250C26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C213C3D-FFCD-E1CC-C738-D1A10250C26D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
