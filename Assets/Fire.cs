@@ -26,42 +26,30 @@ public class Fire : MonoBehaviour {
 	}
 
 
-
-	void OnParticleCollision (GameObject other)
-	{
-		if (other.tag == "Enemy") 
-		{
-			
-			dmgFlag = 1;
-			EnemyHealth enemyHealth = other.GetComponent <EnemyHealth> ();
-
-			// If the EnemyHealth component exist...
-			if (enemyHealth != null)
-			{
-				// ... the enemy should take damage.
-				enemyHealth.TakeDamage(20, new Vector3(0, -20, 0));   
-
-				//GameObject.FindTag ("Emitter").GetComponent<ParticleSystem> ();
-				Debug.Log ("HERE");
-				               
-			}
-		}
-
-
-//		Rigidbody body = other.GetComponent<Rigidbody>();
-//		other.SendMessageUpwards("ApplyDamage", damagepp, SendMessageOptions.DontRequireReceiver);
-//
-//		if (body)
+//	void OnParticleCollision (GameObject other)
+//	{
+//		//if (other.tag == "Enemy") 
 //		{
-//			Vector3 direction = other.transform.position - transform.position;
-//			direction = direction.normalized;
-//			body.AddForce (direction * force);
-//		}
 //
-//		//yield return new WaitForSeconds(spreadAfter);
-//		if (other != null)
-//		{
-//			other.SendMessageUpwards("Fire", null, SendMessageOptions.DontRequireReceiver);
+//			//dmgFlag = 1;
+//			EnemyHealth enemyHealth = other.GetComponent <EnemyHealth> ();
+//			if (enemyHealth == null)
+//				Debug.Log ("sdfsdffdsdf");
+//
+//			//GameObject.G
+//			// If the EnemyHealth component exist...
+//			if (enemyHealth != null)
+//			{
+//				// ... the enemy should take damage.
+//				enemyHealth.TakeDamage(20, new Vector3(0, -20, 0));   
+//				Debug.Log ("HERE");
+//
+//			}
 //		}
-	}
+//	}		
+
+
+
+
+
 }

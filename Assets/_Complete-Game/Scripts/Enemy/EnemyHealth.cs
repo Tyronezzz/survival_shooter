@@ -33,6 +33,16 @@ namespace CompleteProject
         }
 
 
+
+
+		void OnParticleCollision (GameObject other)      //get attacked by Fire
+		{
+	
+			TakeDamage(2, new Vector3(0, -20, 0));				
+		
+		}
+
+
         void Update ()
         {
             // If the enemy should be sinking...
@@ -40,44 +50,10 @@ namespace CompleteProject
             {
                 // ... move the enemy down by the sinkSpeed per second.
                 transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
-            }
-
-			int dmgFlag = Fire.dmgFlag;
-			if (dmgFlag == 1) 
-			{
-				currentHealth -= 40;
-				//Debug.Log ("Ehp"+ currentHealth);
-				GoDie (20);
-				Fire.dmgFlag = 0;
-			}
-
+            }				
 
         }
 
-		public void GoDie(int amount)   // By Tyrone
-		{
-			if(isDead)
-			// ... no need to take damage so exit the function.
-			return;
-
-			// Play the hurt sound effect.
-			enemyAudio.Play ();
-
-			// Reduce the current health by the amount of damage sustained.
-			currentHealth -= amount;
-
-			// And play the particles.
-			hitParticles.Play();
-
-			// If the current health is less than or equal to zero...
-			if(currentHealth <= 0)
-			{
-				// ... the enemy is dead.
-				Death ();
-			}
-
-			Debug.Log ("EHP:"+ currentHealth);
-		}
 
 
 
