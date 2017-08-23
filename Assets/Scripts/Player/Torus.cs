@@ -41,7 +41,11 @@ public class Torus : MonoBehaviour {
         transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
     }
 
+	void OnParticleCollision (GameObject other)      //get attacked by Fire
+	{
+		Debug.Log ("sfsdfs");
 
+	}
 
     /*void OnCollosionEnter(Collider other)
     {

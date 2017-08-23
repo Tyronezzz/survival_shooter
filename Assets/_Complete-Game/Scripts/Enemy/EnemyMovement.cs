@@ -18,6 +18,7 @@ namespace CompleteProject
             playerHealth = player.GetComponent <PlayerHealth> ();
             enemyHealth = GetComponent <EnemyHealth> ();
             nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+			nav.speed = 1.0f;
         }
 
 

@@ -39,28 +39,64 @@ namespace CompleteProject
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
-			if (Input.GetKeyDown(KeyCode.D)) 
-			{
-				//Debug.Log ("...");
-				transform.Rotate (new Vector3(0, 30, 0));
-				total_angle += 30;
-				serialController.SendSerialMessage(total_angle.ToString());
+			//Debug.Log ("zxzxz:"+h);
+
+			float shootime = PlayerShooting.shoottime;
+
+//			Debug.Log ("timee+"+shootime);
+			if (shootime > 0) {
+				;
 			}
 
+			else {
+//				if (Input.GetKeyDown(KeyCode.D)) 
+//				{
+//					//Debug.Log ("...");
+//					transform.Rotate (new Vector3(0, 30, 0));
+//					total_angle += 30;
+//					serialController.SendSerialMessage(total_angle.ToString());
+//				}
+//
+//
+//				else if (Input.GetKeyDown(KeyCode.A)) 
+//				{
+//					//Debug.Log ("left...");
+//					transform.Rotate (new Vector3(0, -30, 0));
+//					total_angle -= 30;
+//					serialController.SendSerialMessage(total_angle.ToString());
+//				}
+			
+				if (Input.mousePosition [0] < 470 && Input.GetMouseButtonDown (0)) {
 
-			if (Input.GetKeyDown(KeyCode.A)) 
-			{
-				//Debug.Log ("left...");
-				transform.Rotate (new Vector3(0, -30, 0));
-				total_angle -= 30;
-				serialController.SendSerialMessage(total_angle.ToString());
+					//Debug.Log ("left...");
+					transform.Rotate (new Vector3 (0, -20, 0));
+					total_angle -= 20;
+					serialController.SendSerialMessage (total_angle.ToString ());
+				} 
+
+
+
+				else if (Input.mousePosition [0] >855 && Input.GetMouseButtonDown (0)) {
+					//Debug.Log ("...");
+					transform.Rotate (new Vector3(0, 20, 0));
+					total_angle += 20;
+					serialController.SendSerialMessage(total_angle.ToString());
+				}
+
+				Debug.Log ("Total angle:"+total_angle);
 			}
 
+			if (Input.mousePosition [1] > 600 && Input.GetMouseButton (0)) {
+				Move (h, 30);
+			}
 
-
+			else if (Input.mousePosition [1] < 420 && Input.GetMouseButton(0)) {
+				Move (h, -30);
+			}
+				
 
             // Move the player around the scene.
-            Move (h, v);
+            //Move (h, v);
 
             // Turn the player to face the mouse cursor.
          //   Turning ();

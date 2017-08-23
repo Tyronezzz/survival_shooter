@@ -134,6 +134,7 @@
      <Compile Include="Assets\Scripts\Threads\SerialThread.cs" />
      <Compile Include="Assets\Scripts\Threads\SerialThreadCustomDelimiter.cs" />
      <Compile Include="Assets\Scripts\Threads\SerialThreadLines.cs" />
+     <Compile Include="Assets\test.cs" />
      <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <None Include="Assets\PostProcessing\Resources\Shaders\DepthOfField.shader" />
      <None Include="Assets\PostProcessing\Resources\Shaders\MotionBlur.cginc" />
