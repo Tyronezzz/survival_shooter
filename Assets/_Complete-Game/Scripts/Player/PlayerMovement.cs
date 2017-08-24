@@ -66,24 +66,32 @@ namespace CompleteProject
 //					serialController.SendSerialMessage(total_angle.ToString());
 //				}
 			
-				if (Input.mousePosition [0] < 470 && Input.GetMouseButtonDown (0)) {
+				//if () {
+				
+					if (Input.mousePosition [0] < 470 && Input.GetMouseButtonDown (0)
+					&& Mathf.Abs (total_angle-20) < 360)
+					{
+						//Debug.Log ("left...");
+						transform.Rotate (new Vector3 (0, -20, 0));
+						total_angle -= 20;
+						serialController.SendSerialMessage (total_angle.ToString ());
+					} 
 
-					//Debug.Log ("left...");
-					transform.Rotate (new Vector3 (0, -20, 0));
-					total_angle -= 20;
-					serialController.SendSerialMessage (total_angle.ToString ());
-				} 
+					else if (Input.mousePosition [0] >855 && Input.GetMouseButtonDown (0)
+					&& Mathf.Abs (total_angle+20) < 360) 
+					{
+						//Debug.Log ("...");
+						transform.Rotate (new Vector3(0, 20, 0));
+						total_angle += 20;
+						serialController.SendSerialMessage(total_angle.ToString());
+					}
+				
+				
+			//	}
 
 
 
-				else if (Input.mousePosition [0] >855 && Input.GetMouseButtonDown (0)) {
-					//Debug.Log ("...");
-					transform.Rotate (new Vector3(0, 20, 0));
-					total_angle += 20;
-					serialController.SendSerialMessage(total_angle.ToString());
-				}
-
-				Debug.Log ("Total angle:"+total_angle);
+				//Debug.Log ("Total angle:"+total_angle);
 			}
 
 			if (Input.mousePosition [1] > 600 && Input.GetMouseButton (0)) {
@@ -93,13 +101,14 @@ namespace CompleteProject
 			else if (Input.mousePosition [1] < 420 && Input.GetMouseButton(0)) {
 				Move (h, -30);
 			}
-				
+			//Debug.Log ("here is:" + new PlayerShooting().getshoot ());
+
 
             // Move the player around the scene.
             //Move (h, v);
 
             // Turn the player to face the mouse cursor.
-         //   Turning ();
+            //   Turning ();
 
             // Animate the player.
             Animating (h, v);
